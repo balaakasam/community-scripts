@@ -11,7 +11,7 @@ name: Missing Security Headers
 description: >
   Some of the following security headers are missing from the HTTP response:
   Strict-Transport-Security, Content-Security-Policy,
-  X-XSS-Protection, X-Content-Type-Options, X-Frame-Options.
+ X-XSS-Protection, X-Content-Type-Options, X-Frame-Options, Referrer-Policy.
 solution: >
   Ensure that your web server, application server, load balancer, etc.
   is configured to set the missing security headers.
@@ -124,6 +124,16 @@ function scan(helper, msg, src) {
       .raise();
   }
 }
+// test Referrer-Policy
+  if (msg.getResponseHeader().getHeaders("Referrer-Policy") == null) {
+    helper
+      .newAlert()
+      .setName("Referrer-Policy Header Not Set (script)")
+      .setDescription("The Referrer-Policy header is not set. This header controls how much referrer information is included with requests, helping to protect user privacy and prevent information leakage.")
+      .setSolution("Ensure that your web server, application server, load balancer, etc. is configured to set the Referrer-Policy header. Recommended value: 'strict-origin-when-cross-origin'.")
+      .setMessage(msg)
+      .raise();
+  }
 
 function hasAnyHeader(header, headers) {
   for (var i in headers) {
