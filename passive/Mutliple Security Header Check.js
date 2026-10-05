@@ -128,7 +128,7 @@ var alertTitle = [
   }
 }
 
-// test Referrer-Policy
+  // test Referrer-Policy
   if (msg.getResponseHeader().getHeaders("Referrer-Policy") == null) {
     helper
       .newAlert()
